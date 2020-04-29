@@ -5,6 +5,7 @@ const Canvas = ({
   height,
   rowsNumber = 15,
   columnsNumber = 15,
+  pixelColor,
   setPixelImageDataUri,
 }) => {
   const canvasRef = useRef(null)
@@ -63,7 +64,7 @@ const Canvas = ({
     const indexY = Math.floor(newPosY / pixelSize)
 
     const ctx = canvasRef.current.getContext('2d')
-    ctx.fillStyle = 'skyblue'
+    ctx.fillStyle = pixelColor
     ctx.fillRect(indexX * pixelSize, indexY * pixelSize, pixelSize, pixelSize)
     setPixelImageDataUri(canvasRef.current.toDataURL('image/png'))
   }
