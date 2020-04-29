@@ -1,10 +1,19 @@
 import React, { useRef, useEffect } from 'react'
 
-const Canvas = ({ width, height, rowsNumber = 15, columnsNumber = 15 }) => {
+const Canvas = ({
+  width,
+  height,
+  rowsNumber = 15,
+  columnsNumber = 15,
+  setPixelImageDataUri,
+}) => {
   const canvasRef = useRef(null)
 
   useEffect(() => {
     const ctx = canvasRef.current.getContext('2d')
+    ctx.fillStyle = 'white'
+    ctx.fillRect(0, 0, width, height)
+
     ctx.strokeStyle = 'black'
     ctx.lineWidth = 1
 
@@ -23,7 +32,7 @@ const Canvas = ({ width, height, rowsNumber = 15, columnsNumber = 15 }) => {
       ctx.lineTo(width, y)
       ctx.stroke()
     }
-  }, [columnsNumber, height, rowsNumber, width])
+  }, [columnsNumber, height, canvasRef, rowsNumber, width])
 
   const handleMouseMove = event => {
     let newPosX = event.clientX - canvasRef.current.getBoundingClientRect().left
@@ -56,6 +65,7 @@ const Canvas = ({ width, height, rowsNumber = 15, columnsNumber = 15 }) => {
     const ctx = canvasRef.current.getContext('2d')
     ctx.fillStyle = 'skyblue'
     ctx.fillRect(indexX * pixelSize, indexY * pixelSize, pixelSize, pixelSize)
+    setPixelImageDataUri(canvasRef.current.toDataURL('image/png'))
   }
 
   const handleMouseUp = () => {
